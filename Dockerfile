@@ -1,23 +1,30 @@
-FROM node:14.17.0-slim
+# FROM node:14.17.0-slim
+# FROM node:16.14.2-slim
+# FROM node:18-slim
+FROM node:18.16.1-slim
 
 # RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
 RUN mkdir -p /usr/share/man/man1 && \
     echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list && \
     apt update && apt install -y \
     git \
-    wget \
     ca-certificates \
     zsh \
     curl \
     wget \
     fonts-powerline \
-    procps && \
+    procps \
+    gpg \
+    gnupg \
+    gpg-agent \
+    socat \
+    graphviz && \
     wget https://download.java.net/openjdk/jdk17/ri/openjdk-17+35_linux-x64_bin.tar.gz && \
     tar xvf openjdk-17+35_linux-x64_bin.tar.gz && \
     rm openjdk-17+35_linux-x64_bin.tar.gz && \
     mv jdk-17*/ /opt/jdk17
 
-RUN npm install -g @nestjs/cli@8.2.5 npm@8.5.5
+RUN npm install -g @nestjs/cli@8.2.5 npm@9.7.2
 
 ENV JAVA_HOME="/opt/jdk17"
 ENV PATH=$PATH:$JAVA_HOME/bin
